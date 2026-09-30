@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="title">张世林 · 个人主页</title>
+  <meta name="description" id="metaDesc" content="张世林的个人主页，一名来自中国河北石家庄的程序员。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    :root {
+      --bg: #04050d;
+      --surface: rgba(12, 18, 38, 0.55);
+      --text: #e8f3ff;
+      --muted: #a3b6cc;
+      --subtle: #6f84a0;
+      --border: rgba(80, 220, 255, 0.16);
+      --accent: #22e6ff;
+      --accent-2: #ff3df2;
+      --accent-3: #8b5cff;
+      --accent-soft: rgba(34, 230, 255, 0.10);
+      --glow: 0 0 12px rgba(34, 230, 255, 0.55), 0 0 32px rgba(34, 230, 255, 0.25);
+      --glow-2: 0 0 12px rgba(255, 61, 242, 0.55), 0 0 32px rgba(255, 61, 242, 0.25);
+      --blob-opacity: .55;
+      --grid-color: rgba(34, 230, 255, 0.30);
+      --grad: linear-gradient(90deg, #22e6ff, #8b5cff, #ff3df2, #22e6ff);
+      --sans: "Be Vietnam Pro", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --display: "Chakra Petch", "Noto Sans SC", "PingFang SC", sans-serif;
+      --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, "Noto Sans SC", monospace;
+      color-scheme: dark;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #eef3fb;
+      --surface: rgba(255, 255, 255, 0.65);
+      --text: #0b1426;
+      --muted: #3c4a62;
+      --subtle: #66758e;
+      --border: rgba(8, 145, 178, 0.22);
+      --accent: #0891b2;
+      --accent-2: #c026d3;
+      --accent-3: #6d28d9;
+      --accent-soft: rgba(8, 145, 178, 0.10);
+      --glow: 0 0 10px rgba(8, 145, 178, 0.30);
+      --glow-2: 0 0 10px rgba(192, 38, 211, 0.30);
+      --blob-opacity: .28;
+      --grid-color: rgba(8, 145, 178, 0.22);
+      --grad: linear-gradient(90deg, #0891b2, #6d28d9, #c026d3, #0891b2);
+      color-scheme: light;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
+    ::selection { background: rgba(255, 61, 242, 0.35); color: var(--text); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background-color .3s ease, color .3s ease;
+    }
+
+    /* ===== 背景：霓虹光晕 + 透视网格 + 扫描线 + 鼠标光斑 ===== */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg);
+      pointer-events: none;
+      transition: background-color .3s ease;
+    }
+    .blob {
+      position: absolute;
+      width: 55vmax;
+      height: 55vmax;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: var(--blob-opacity);
+      will-change: transform;
+    }
+    .b1 {
+      top: -25vmax;
+      left: -20vmax;
+      background: radial-gradient(circle, #0ea5e9, transparent 65%);
+      animation: drift1 22s ease-in-out infinite alternate;
+    }
+    .b2 {
+      top: 0;
+      right: -25vmax;
+      background: radial-gradient(circle, #d946ef, transparent 65%);
+      animation: drift2 28s ease-in-out infinite alternate;
+    }
+    .b3 {
+      bottom: -30vmax;
+      left: 15vw;
+      background: radial-gradient(circle, #7c3aed, transparent 65%);
+      animation: drift3 34s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(35vw, 30vh) scale(1.2); } }
+    @keyframes drift2 { to { transform: translate(-40vw, 35vh) scale(.85); } }
+    @keyframes drift3 { to { transform: translate(25vw, -45vh) scale(1.15); } }
+
+    .grid {
+      position: absolute;
+      left: -50%;
+      right: -50%;
+      bottom: -2px;
+      height: 55vh;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 56px 56px;
+      transform: perspective(420px) rotateX(62deg);
+      transform-origin: bottom center;
+      -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .6) 35%, transparent 85%);
+      mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .6) 35%, transparent 85%);
+      animation: gridmove 2.4s linear infinite;
+    }
+    @keyframes gridmove { to { background-position: 0 56px, 0 0; } }
+
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px),
+        radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+    }
+    :root[data-theme="light"] .bg::after { display: none; }
+
+    #rain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .32;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, .35), #000 75%);
+      mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, .35), #000 75%);
+    }
+    :root[data-theme="light"] #rain { opacity: .18; }
+    .sweep {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      box-shadow: 0 0 18px 2px rgba(34, 230, 255, 0.55);
+      opacity: .5;
+      animation: sweep 7s linear infinite;
+    }
+    @keyframes sweep {
+      0% { transform: translateY(0); opacity: 0; }
+      5% { opacity: .5; }
+      60% { opacity: .5; }
+      70%, 100% { transform: translateY(120vh); opacity: 0; }
+    }
+    .spotlight {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(520px circle at var(--mx, 50%) var(--my, -20%), rgba(34, 230, 255, 0.09), transparent 45%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== 顶部 ===== */
+    header { padding: 28px 0; }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: .02em;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .logo {
+      text-shadow: 0 0 8px rgba(34, 230, 255, 0.35);
+    }
+    .logo span:last-child {
+      color: var(--accent);
+      text-shadow: var(--glow);
+      animation: blink 1.1s steps(1) infinite;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lang-switch {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+    .lang-switch button {
+      height: 32px;
+      min-width: 36px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color .2s, background-color .2s, box-shadow .2s;
+    }
+    .lang-switch button:hover { color: var(--text); }
+    .lang-switch button[aria-pressed="true"] {
+      background: var(--accent-soft);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(34, 230, 255, 0.45), var(--glow);
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .2s, border-color .2s, box-shadow .2s;
+    }
+    .theme-toggle:hover { color: var(--accent); border-color: var(--accent); box-shadow: var(--glow); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .icon-moon { display: none; }
+    :root[data-theme="light"] .icon-sun { display: none; }
+    :root[data-theme="light"] .icon-moon { display: block; }
+
+    main { flex: 1; }
+
+    .hud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-bottom: 36px;
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      color: var(--subtle);
+      text-transform: uppercase;
+    }
+    .hud span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .hud b { color: var(--accent); font-weight: 500; text-shadow: 0 0 8px rgba(34, 230, 255, 0.5); }
+    .hud .hot { color: var(--accent-2); text-shadow: 0 0 8px rgba(255, 61, 242, 0.6); }
+
+    /* ===== 首屏 ===== */
+    .hero { padding: clamp(32px, 8vh, 88px) 0 64px; }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+      margin: 14px 0 40px 14px;
+      position: relative;
+      isolation: isolate;
+    }
+    .avatar::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #22e6ff, #8b5cff, #ff3df2, #22e6ff);
+      filter: drop-shadow(0 0 10px rgba(34, 230, 255, 0.6));
+      z-index: -2;
+      animation: spin 4s linear infinite;
+    }
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #1b2a55, #070a18 70%);
+      box-shadow: 0 0 0 4px var(--bg), inset 0 0 24px rgba(34, 230, 255, 0.35);
+      z-index: -1;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .ring.r1 {
+      inset: -16px;
+      border: 1px dashed rgba(34, 230, 255, 0.6);
+      animation: spin 14s linear infinite reverse;
+    }
+    .ring.r2 {
+      inset: -24px;
+      border: 2px solid transparent;
+      border-top-color: var(--accent-2);
+      border-bottom-color: var(--accent);
+      filter: drop-shadow(0 0 6px rgba(255, 61, 242, 0.8));
+      animation: spin 3s cubic-bezier(.6, .1, .4, .9) infinite;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(34, 230, 255, 0.35);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: .8rem;
+      margin-bottom: 24px;
+      box-shadow: inset 0 0 12px rgba(34, 230, 255, 0.12);
+    }
+    .badge::before {
+      content: "";
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34ffa0;
+      box-shadow: 0 0 8px #34ffa0;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .3; }
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+    h1 .greet {
+      display: block;
+      font-family: var(--mono);
+      font-size: clamp(.85rem, 2.2vw, 1rem);
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(34, 230, 255, 0.6);
+      margin-bottom: 6px;
+      animation: flicker 6s infinite;
+    }
+    h1 .greet::before { content: "> "; color: var(--accent-2); }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 54%, 56%, 100% { opacity: 1; }
+      20%, 22%, 55% { opacity: .25; }
+    }
+    h1 .highlight {
+      position: relative;
+      display: inline-block;
+      font-size: clamp(2.4rem, 10vw, 5.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      background: var(--grad);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 14px rgba(34, 230, 255, 0.45)) drop-shadow(0 0 30px rgba(255, 61, 242, 0.35));
+      animation: shimmer 6s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 300% 0; } }
+
+    /* 故障（glitch）效果：偶尔闪一下 */
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      background: none;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .glitch::before {
+      color: #22e6ff;
+      text-shadow: -2px 0 #ff3df2;
+      animation: glitch-a 3.2s infinite steps(1);
+    }
+    .glitch::after {
+      color: #ff3df2;
+      text-shadow: 2px 0 #22e6ff;
+      animation: glitch-b 3.2s infinite steps(1);
+    }
+    h1:hover .glitch::before { animation-duration: .6s; }
+    h1:hover .glitch::after { animation-duration: .6s; }
+    @keyframes glitch-a {
+      0%, 88%, 100% { opacity: 0; transform: none; clip-path: none; }
+      89% { opacity: 1; transform: translate(-6px, 1px) skewX(-8deg); clip-path: inset(10% 0 55% 0); }
+      91% { opacity: 1; transform: translate(5px, -1px); clip-path: inset(60% 0 8% 0); }
+      93% { opacity: 1; transform: translate(-3px, 0) skewX(6deg); clip-path: inset(30% 0 40% 0); }
+      95% { opacity: 0; }
+    }
+    @keyframes glitch-b {
+      0%, 88%, 100% { opacity: 0; transform: none; clip-path: none; }
+      89% { opacity: 1; transform: translate(6px, -1px) skewX(8deg); clip-path: inset(55% 0 12% 0); }
+      91% { opacity: 1; transform: translate(-5px, 1px); clip-path: inset(5% 0 70% 0); }
+      93% { opacity: 1; transform: translate(3px, 0) skewX(-6deg); clip-path: inset(40% 0 30% 0); }
+      95% { opacity: 0; }
+    }
+
+    .tagline {
+      font-family: var(--mono);
+      font-size: clamp(.9rem, 2.2vw, 1.02rem);
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 40em;
+      min-height: 3.6em;
+      padding-left: 16px;
+      border-left: 2px solid var(--accent-2);
+      box-shadow: -8px 0 16px -10px rgba(255, 61, 242, 0.8);
+    }
+    .tagline::after {
+      content: "";
+      display: inline-block;
+      width: .55em;
+      height: 1.1em;
+      margin-left: 4px;
+      vertical-align: -0.18em;
+      background: var(--accent);
+      box-shadow: var(--glow);
+      animation: blink 1.1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== 关于我 ===== */
+    .about { padding: 0 0 80px; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: .82rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--accent);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label::before {
+      content: "// 01";
+      color: var(--accent-2);
+      text-shadow: var(--glow-2);
+    }
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(34, 230, 255, 0.5), transparent);
+    }
+
+    .card-frame {
+      position: relative;
+      filter: drop-shadow(0 0 18px rgba(34, 230, 255, 0.22)) drop-shadow(0 0 40px rgba(255, 61, 242, 0.12));
+      transition: transform .25s ease-out;
+      will-change: transform;
+    }
+    /* HUD 角标 */
+    .card-frame::before,
+    .card-frame::after {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .card-frame::before {
+      top: -8px;
+      right: -8px;
+      border-top: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+    .card-frame::after {
+      bottom: -8px;
+      left: -8px;
+      border-bottom: 2px solid var(--accent-2);
+      border-left: 2px solid var(--accent-2);
+    }
+    .card {
+      --cut: 26px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: clamp(26px, 5vw, 44px);
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      background: conic-gradient(from var(--angle), #22e6ff, rgba(139, 92, 255, 0.25) 25%, #ff3df2 50%, rgba(139, 92, 255, 0.25) 75%, #22e6ff);
+      animation: border-spin 5s linear infinite;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 1.5px;
+      z-index: -1;
+      clip-path: polygon(calc(var(--cut) - 1px) 0, 100% 0, 100% calc(100% - var(--cut) + 1px), calc(100% - var(--cut) + 1px) 100%, 0 100%, 0 calc(var(--cut) - 1px));
+      background:
+        linear-gradient(rgba(34, 230, 255, 0.05) 1px, transparent 1px) 0 0 / 100% 24px,
+        linear-gradient(160deg, rgba(10, 16, 40, 0.94), rgba(6, 8, 22, 0.96));
+    }
+    :root[data-theme="light"] .card::after {
+      background:
+        linear-gradient(rgba(8, 145, 178, 0.06) 1px, transparent 1px) 0 0 / 100% 24px,
+        linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(240, 246, 255, 0.96));
+    }
+    /* 扫描光带 */
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 90px;
+      background: linear-gradient(to bottom, transparent, rgba(34, 230, 255, 0.10), transparent);
+      transform: translateY(-100%);
+      animation: card-scan 4.5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes card-scan {
+      0% { transform: translateY(-100%); }
+      60%, 100% { transform: translateY(900%); }
+    }
+    @keyframes border-spin { to { --angle: 360deg; } }
+    .card > * { position: relative; z-index: 1; }
+    .card p {
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+    .card p + p { margin-top: 16px; }
+    .card strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .tags span {
+      padding: 6px 14px;
+      border-radius: 0;
+      clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+      border: 1px solid var(--border);
+      background: rgba(34, 230, 255, 0.04);
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+      transition: color .2s, border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .tags span:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
+    }
+
+    /* ===== 底部 ===== */
+    footer {
+      position: relative;
+      padding: 56px 0 40px;
+    }
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: min(760px, 90%);
+      height: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent-2) 70%, transparent);
+      box-shadow: 0 0 12px rgba(34, 230, 255, 0.5);
+      opacity: .7;
+    }
+    footer .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .contact-title {
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 4.2vw, 2rem);
+      font-weight: 700;
+      background: var(--grad);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(34, 230, 255, 0.4));
+    }
+    .contact-title::before { content: "// 02 "; font-family: var(--mono); font-size: .55em; letter-spacing: .1em; vertical-align: middle; }
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      list-style: none;
+    }
+    .socials li { transition: filter .2s; }
+    .socials li:hover,
+    .socials li:focus-within {
+      filter: drop-shadow(0 0 10px rgba(34, 230, 255, 0.65));
+    }
+    .social {
+      --cut: 10px;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 18px;
+      position: relative;
+      isolation: isolate;
+      border: 0;
+      clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+      background: rgba(34, 230, 255, 0.35);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .2s, background-color .2s, transform .2s;
+    }
+    .social::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      z-index: -1;
+      clip-path: polygon(calc(var(--cut) - 1px) 0, 100% 0, 100% calc(100% - var(--cut) + 1px), calc(100% - var(--cut) + 1px) 100%, 0 100%, 0 calc(var(--cut) - 1px));
+      background: rgba(8, 12, 30, 0.92);
+      transition: background-color .2s;
+    }
+    :root[data-theme="light"] .social::before { background: rgba(255, 255, 255, 0.92); }
+    .social:hover,
+    .social:focus-visible,
+    .social[aria-expanded="true"] {
+      color: var(--accent);
+      background: var(--accent);
+      transform: translateY(-3px);
+      outline: none;
+    }
+    .social:hover::before,
+    .social:focus-visible::before,
+    .social[aria-expanded="true"]::before {
+      background: rgba(6, 30, 48, 0.94);
+    }
+    :root[data-theme="light"] .social:hover::before,
+    :root[data-theme="light"] .social[aria-expanded="true"]::before { background: #e6f7fb; }
+    .social svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .contact-panel {
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      border-radius: 0;
+      clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+      border: 1px solid rgba(34, 230, 255, 0.45);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7), 0 0 30px -10px rgba(34, 230, 255, 0.35);
+      text-align: center;
+      animation: fadeUp .3s ease forwards;
+    }
+    .contact-panel[hidden] { display: none; }
+    .contact-qr {
+      display: block;
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      margin: 0 auto 12px;
+      border-radius: 10px;
+      background: #fff;
+    }
+    /* 二维码四周留白，方便扫码识别 */
+    .contact-qr.qr-tight { padding: 12px; max-width: 200px; }
+    .contact-panel p {
+      font-family: var(--mono);
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 8px;
+    }
+    .contact-id {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .contact-id code {
+      font-family: var(--mono);
+      font-size: .95rem;
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(34, 230, 255, 0.4);
+      word-break: break-all;
+    }
+    .contact-id button {
+      flex-shrink: 0;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: .75rem;
+      cursor: pointer;
+      transition: background-color .2s, box-shadow .2s;
+    }
+    .contact-id button:hover { background: var(--accent-soft); box-shadow: var(--glow); }
+    .copyright {
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--subtle);
+      text-align: center;
+    }
+
+    /* ===== 开机动画 ===== */
+    .boot {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      place-items: center;
+      padding: 24px;
+      background: #03040a;
+      cursor: pointer;
+      transition: opacity .5s ease, visibility .5s;
+    }
+    .booting .boot { display: grid; }
+    .boot.done { display: grid; opacity: 0; visibility: hidden; }
+    .boot-inner {
+      width: min(560px, 100%);
+      font-family: var(--mono);
+      font-size: clamp(.75rem, 2.4vw, .9rem);
+      color: #22e6ff;
+      text-shadow: 0 0 8px rgba(34, 230, 255, 0.6);
+    }
+    .boot pre {
+      font: inherit;
+      white-space: pre-wrap;
+      min-height: 9em;
+    }
+    .boot pre .ok { color: #34ffa0; text-shadow: 0 0 8px rgba(52, 255, 160, 0.6); }
+    .boot pre .hot { color: #ff3df2; text-shadow: 0 0 8px rgba(255, 61, 242, 0.6); }
+    .boot-bar {
+      margin-top: 18px;
+      height: 3px;
+      background: rgba(34, 230, 255, 0.15);
+      overflow: hidden;
+    }
+    .boot-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #22e6ff, #ff3df2);
+      box-shadow: 0 0 12px #22e6ff;
+      transition: width .2s ease;
+    }
+    .boot-skip {
+      margin-top: 14px;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: rgba(34, 230, 255, 0.5);
+      text-transform: uppercase;
+    }
+    .booting .fade-in { animation-play-state: paused; }
+
+    /* ===== 入场动画 ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp .7s cubic-bezier(.2, .7, .2, 1) forwards;
+    }
+    .d1 { animation-delay: .05s; }
+    .d2 { animation-delay: .15s; }
+    .d3 { animation-delay: .25s; }
+    .d4 { animation-delay: .35s; }
+    .d5 { animation-delay: .5s; }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { opacity: 1; transform: none; animation: none; }
+      .blob, .grid, h1 .highlight, .avatar::before, .card, .contact-title,
+      .badge::before, .tagline::after, .logo span:last-child { animation: none; }
+      .glitch::before, .glitch::after { display: none; }
+      .spotlight, .sweep, #rain, .card::before { display: none; }
+      .ring, h1 .greet { animation: none; }
+      .card-frame, .social, .tags span { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .lang-switch button { min-width: 32px; padding: 0 8px; }
+      .avatar { width: 80px; height: 80px; font-size: 1.9rem; margin-bottom: 36px; }
+      .hud { font-size: .66rem; gap: 6px 14px; margin-bottom: 30px; }
+      .card { --cut: 18px; }
+      .about { padding-bottom: 56px; }
+      .grid { height: 40vh; background-size: 40px 40px; }
+      @keyframes gridmove { to { background-position: 0 40px, 0 0; } }
+    }
+    @media (max-width: 360px) {
+      .logo { font-size: 1rem; }
+      .header-actions { gap: 6px; }
+      .lang-switch button { min-width: 28px; padding: 0 6px; }
+    }
+  </style>
+  <script>
+    (function () {
+      try {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && !sessionStorage.getItem("booted")) document.documentElement.classList.add("booting");
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <canvas id="rain"></canvas>
+    <div class="grid"></div>
+    <div class="sweep"></div>
+    <div class="spotlight"></div>
+  </div>
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <pre id="bootLog"></pre>
+      <div class="boot-bar"><span id="bootBar"></span></div>
+      <div class="boot-skip">[ click / press any key to skip ]</div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <a href="#" class="logo"><span data-i18n="name">张世林</span><span>.</span></a>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria="langLabel" aria-label="选择语言">
+          <button type="button" data-lang="vi" lang="vi">VI</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+          <button type="button" data-lang="zh" lang="zh-CN">中</button>
+        </div>
+        <button class="theme-toggle" id="themeToggle" data-i18n-aria="themeLabel" aria-label="切换深色/浅色模式">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hud fade-in d1" aria-hidden="true">
+          <span><span class="hot">●</span> SYS://<b>ONLINE</b></span>
+          <span>LOC <b>38.0428°N 114.5149°E</b></span>
+          <span>GMT+8 <b id="clock">--:--:--</b></span>
+        </div>
+        <div class="avatar fade-in d1" aria-hidden="true">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span data-i18n="avatar">张</span>
+        </div>
+        <div class="badge fade-in d2" data-i18n="badge">程序员 · 中国河北石家庄</div>
+        <h1 class="fade-in d3"><span class="greet" data-i18n="greet">你好，我是</span><span class="highlight glitch" data-i18n="name" data-text="张世林">张世林</span></h1>
+        <p class="tagline fade-in d4" data-i18n="tagline">一名来自中国河北石家庄的程序员。写代码，也爱在马背上、书页间和旅途中感受世界。</p>
+      </div>
+    </section>
+
+    <section class="about fade-in d5" id="about">
+      <div class="container">
+        <h2 class="section-label" data-i18n="about">关于我</h2>
+        <div class="card-frame" id="cardFrame">
+        <div class="card">
+          <p data-i18n-html="p1">我是 <strong>张世林</strong>，一名 <strong>程序员</strong>，来自 <strong>中国河北石家庄</strong>。我喜欢把复杂的问题拆解成清晰的逻辑，用代码把想法变成真正能用的东西，也相信好的软件应该简单、可靠、让人用得舒服。</p>
+          <p data-i18n-html="p2">工作之外，我喜欢 <strong>骑马</strong>，享受驰骋时的自由与专注；喜欢 <strong>阅读</strong>，在书里遇见不同的思想和人生；也热爱 <strong>旅游</strong>，去看更远的风景、认识更多有趣的人。如果你想聊聊技术、合作，或者只是交个朋友，欢迎通过下方的方式联系我。</p>
+          <div class="tags">
+            <span data-i18n="tag1">💻 编程</span>
+            <span data-i18n="tag2">🐎 骑马</span>
+            <span data-i18n="tag3">📚 阅读</span>
+            <span data-i18n="tag4">✈️ 旅游</span>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <h2 class="contact-title" data-i18n="contact">联系我</h2>
+      <ul class="socials">
+        <li>
+          <button type="button" class="social" data-panel="wechatPanel" aria-expanded="false" aria-controls="wechatPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 4C5.4 4 2 6.8 2 10.2c0 1.9 1 3.6 2.7 4.7L4 17.5l2.9-1.5c.8.2 1.7.4 2.6.4"/><path d="M15.5 9C12 9 9.2 11.3 9.2 14.2s2.8 5.2 6.3 5.2c.7 0 1.4-.1 2-.3l2.4 1.3-.6-2.1c1.4-1 2.3-2.4 2.3-4.1C21.6 11.3 18.9 9 15.5 9z"/><circle cx="7" cy="8.6" r=".6" fill="currentColor"/><circle cx="11.6" cy="8.6" r=".6" fill="currentColor"/><circle cx="13.5" cy="13.4" r=".5" fill="currentColor"/><circle cx="17.5" cy="13.4" r=".5" fill="currentColor"/></svg>
+            <span data-i18n="wechat">微信</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="social" data-panel="zaloPanel" aria-expanded="false" aria-controls="zaloPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C6.5 3 2 6.9 2 11.6c0 2.6 1.4 4.9 3.6 6.5L5 21l3.4-1.7c1.1.3 2.3.5 3.6.5 5.5 0 10-3.9 10-8.6S17.5 3 12 3z"/><path d="M9 9h6l-6 6h6"/></svg>
+            <span>Zalo</span>
+          </button>
+        </li>
+        <li>
+          <a href="https://www.douyin.com/user/MS4wLjABAAAAOQHdYPEafTdHKS9QPtWQr9elwCqy6gXkQ-TkEB8Fp7U" class="social" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3v12.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M13 3c.4 2.6 2.4 4.6 5 5"/></svg>
+            <span data-i18n="douyin">抖音</span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:920311711@qq.com" class="social">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            <span data-i18n="email">邮箱</span>
+          </a>
+        </li>
+      </ul>
+      <div class="contact-panel" id="wechatPanel" hidden>
+        <img class="contact-qr qr-tight" src="wechet-qr.png" data-i18n-alt="wechatQr" alt="微信二维码" onerror="this.remove()" />
+        <p data-i18n="wechatId">微信号</p>
+        <div class="contact-id">
+          <code>_zhangshilin</code>
+          <button type="button" data-copy="_zhangshilin" data-i18n="copy">复制</button>
+        </div>
+      </div>
+      <div class="contact-panel" id="zaloPanel" hidden>
+        <img class="contact-qr" src="zalo-qr.jpg" data-i18n-alt="zaloQr" alt="Zalo 二维码" onerror="this.remove()" />
+      </div>
+      <p class="copyright">© <span id="year">2026</span> <span data-i18n="name">张世林</span> · <span data-i18n="motto">用心生活，认真创造</span></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (e) {}
+      if (saved) root.setAttribute("data-theme", saved);
+
+      document.getElementById("themeToggle").addEventListener("click", function () {
+        var current = root.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("theme", next); } catch (e) {}
+      });
+
+      var I18N = {
+        zh: {
+          htmlLang: "zh-CN",
+          title: "张世林 · 个人主页",
+          desc: "张世林的个人主页，一名来自中国河北石家庄的程序员。",
+          name: "张世林",
+          avatar: "张",
+          badge: "程序员 · 中国河北石家庄",
+          greet: "你好，我是",
+          tagline: "一名来自中国河北石家庄的程序员。写代码，也爱在马背上、书页间和旅途中感受世界。",
+          about: "关于我",
+          p1: "我是 <strong>张世林</strong>，一名 <strong>程序员</strong>，来自 <strong>中国河北石家庄</strong>。我喜欢把复杂的问题拆解成清晰的逻辑，用代码把想法变成真正能用的东西，也相信好的软件应该简单、可靠、让人用得舒服。",
+          p2: "工作之外，我喜欢 <strong>骑马</strong>，享受驰骋时的自由与专注；喜欢 <strong>阅读</strong>，在书里遇见不同的思想和人生；也热爱 <strong>旅游</strong>，去看更远的风景、认识更多有趣的人。如果你想聊聊技术、合作，或者只是交个朋友，欢迎通过下方的方式联系我。",
+          tag1: "💻 编程", tag2: "🐎 骑马", tag3: "📚 阅读", tag4: "✈️ 旅游",
+          wechat: "微信", douyin: "抖音", email: "邮箱",
+          wechatQr: "微信二维码", zaloQr: "Zalo 二维码",
+          wechatId: "微信号",
+          copy: "复制", copied: "已复制",
+          motto: "用心生活，认真创造",
+          contact: "联系我",
+          themeLabel: "切换深色/浅色模式", langLabel: "选择语言"
+        },
+        en: {
+          htmlLang: "en",
+          title: "Zhang Shilin · Personal Homepage",
+          desc: "Personal homepage of Zhang Shilin, a programmer from Shijiazhuang, Hebei, China.",
+          name: "Zhang Shilin",
+          avatar: "Z",
+          badge: "Programmer · Shijiazhuang, Hebei, China",
+          greet: "Hi, I'm",
+          tagline: "A programmer from Shijiazhuang, Hebei, China. I write code, and I love experiencing the world on horseback, between the pages of a book, and on the road.",
+          about: "About me",
+          p1: "I'm <strong>Zhang Shilin</strong>, a <strong>programmer</strong> from <strong>Shijiazhuang, Hebei, China</strong>. I enjoy breaking complex problems down into clear logic and using code to turn ideas into things that actually work. I believe good software should be simple, reliable, and pleasant to use.",
+          p2: "Outside of work, I love <strong>horse riding</strong> for the freedom and focus it brings, <strong>reading</strong> to meet different ideas and lives, and <strong>traveling</strong> to see farther places and meet interesting people. If you'd like to talk tech, work together, or just make a new friend, feel free to reach out below.",
+          tag1: "💻 Coding", tag2: "🐎 Horse riding", tag3: "📚 Reading", tag4: "✈️ Travel",
+          wechat: "WeChat", douyin: "Douyin", email: "Email",
+          wechatQr: "WeChat QR code", zaloQr: "Zalo QR code",
+          wechatId: "WeChat ID",
+          copy: "Copy", copied: "Copied",
+          motto: "Live with heart, create with care",
+          contact: "Get in touch",
+          themeLabel: "Toggle dark/light mode", langLabel: "Choose language"
+        },
+        vi: {
+          htmlLang: "vi",
+          title: "Trương Thế Lâm · Trang cá nhân",
+          desc: "Trang cá nhân của Trương Thế Lâm, một lập trình viên đến từ Thạch Gia Trang, Hà Bắc, Trung Quốc.",
+          name: "Trương Thế Lâm",
+          avatar: "T",
+          badge: "Lập trình viên · Thạch Gia Trang, Hà Bắc, Trung Quốc",
+          greet: "Xin chào, tôi là",
+          tagline: "Một lập trình viên đến từ Thạch Gia Trang, Hà Bắc, Trung Quốc. Tôi viết code, và yêu thích cảm nhận thế giới trên lưng ngựa, giữa những trang sách và trên mỗi chuyến đi.",
+          about: "Về tôi",
+          p1: "Tôi là <strong>Trương Thế Lâm</strong>, một <strong>lập trình viên</strong> đến từ <strong>Thạch Gia Trang, Hà Bắc, Trung Quốc</strong>. Tôi thích chia nhỏ những vấn đề phức tạp thành logic rõ ràng, dùng code để biến ý tưởng thành những sản phẩm thực sự hữu ích, và tin rằng phần mềm tốt phải đơn giản, đáng tin cậy và dễ chịu khi sử dụng.",
+          p2: "Ngoài công việc, tôi thích <strong>cưỡi ngựa</strong> vì cảm giác tự do và tập trung mà nó mang lại, thích <strong>đọc sách</strong> để gặp gỡ những tư tưởng và cuộc đời khác nhau, và đam mê <strong>du lịch</strong> để ngắm nhìn những miền đất xa hơn, làm quen với nhiều người thú vị. Nếu bạn muốn trò chuyện về công nghệ, hợp tác, hay đơn giản là kết bạn, hãy liên hệ với tôi qua các kênh bên dưới.",
+          tag1: "💻 Lập trình", tag2: "🐎 Cưỡi ngựa", tag3: "📚 Đọc sách", tag4: "✈️ Du lịch",
+          wechat: "WeChat", douyin: "Douyin", email: "Email",
+          wechatQr: "Mã QR WeChat", zaloQr: "Mã QR Zalo",
+          wechatId: "ID WeChat",
+          copy: "Sao chép", copied: "Đã sao chép",
+          motto: "Sống bằng cả trái tim, sáng tạo bằng sự tận tâm",
+          contact: "Kết nối với tôi",
+          themeLabel: "Chuyển chế độ sáng/tối", langLabel: "Chọn ngôn ngữ"
+        }
+      };
+
+      var lang = "vi";
+      function t(key) { return I18N[lang][key]; }
+
+      function applyLang(next) {
+        lang = I18N[next] ? next : "vi";
+        root.setAttribute("lang", t("htmlLang"));
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+          el.innerHTML = t(el.getAttribute("data-i18n-html"));
+        });
+        document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+          el.setAttribute("alt", t(el.getAttribute("data-i18n-alt")));
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+          el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+        });
+        document.getElementById("metaDesc").setAttribute("content", t("desc"));
+        document.querySelectorAll("[data-lang]").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", String(btn.getAttribute("data-lang") === lang));
+        });
+        document.querySelectorAll(".glitch").forEach(function (el) {
+          el.setAttribute("data-text", el.textContent);
+        });
+        typeTagline();
+      }
+
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var typeTimer = null;
+      function typeTagline() {
+        var el = document.querySelector(".tagline");
+        var full = t("tagline");
+        clearInterval(typeTimer);
+        if (reduceMotion) { el.textContent = full; return; }
+        if (root.classList.contains("booting")) { el.textContent = ""; return; }
+        var i = 0;
+        el.textContent = "";
+        typeTimer = setInterval(function () {
+          i += 1;
+          el.textContent = full.slice(0, i);
+          if (i >= full.length) clearInterval(typeTimer);
+        }, 22);
+      }
+
+      if (window.matchMedia("(pointer: fine)").matches) {
+        window.addEventListener("pointermove", function (e) {
+          root.style.setProperty("--mx", e.clientX + "px");
+          root.style.setProperty("--my", e.clientY + "px");
+        }, { passive: true });
+      }
+
+      var savedLang = null;
+      try { savedLang = localStorage.getItem("lang"); } catch (e) {}
+      applyLang(savedLang || "vi");
+
+      document.querySelectorAll("[data-lang]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLang(btn.getAttribute("data-lang"));
+          try { localStorage.setItem("lang", lang); } catch (e) {}
+        });
+      });
+
+      var panelBtns = document.querySelectorAll("[data-panel]");
+      panelBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var target = btn.getAttribute("data-panel");
+          panelBtns.forEach(function (other) {
+            var id = other.getAttribute("data-panel");
+            var open = id === target && document.getElementById(id).hidden;
+            document.getElementById(id).hidden = !open;
+            other.setAttribute("aria-expanded", String(open));
+          });
+        });
+      });
+
+      document.querySelectorAll("[data-copy]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var done = function () {
+            btn.textContent = t("copied");
+            setTimeout(function () { btn.textContent = t("copy"); }, 1500);
+          };
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(btn.getAttribute("data-copy")).then(done, function () {});
+          }
+        });
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // HUD 时钟（石家庄时间）
+      var clock = document.getElementById("clock");
+      function tick() {
+        try {
+          clock.textContent = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Shanghai", hour12: false });
+        } catch (e) {
+          clock.textContent = new Date().toTimeString().slice(0, 8);
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      // 卡片 3D 倾斜
+      var frame = document.getElementById("cardFrame");
+      if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+        frame.addEventListener("pointermove", function (e) {
+          var rect = frame.getBoundingClientRect();
+          var x = (e.clientX - rect.left) / rect.width - 0.5;
+          var y = (e.clientY - rect.top) / rect.height - 0.5;
+          frame.style.transform = "perspective(900px) rotateY(" + (x * 8) + "deg) rotateX(" + (-y * 8) + "deg)";
+        });
+        frame.addEventListener("pointerleave", function () {
+          frame.style.transform = "";
+        });
+      }
+
+      // 数字雨
+      var canvas = document.getElementById("rain");
+      var ctx = canvas.getContext && canvas.getContext("2d");
+      if (ctx && !reduceMotion) {
+        var chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノ<>/{}[]#$%&*+=ABCDEF".split("");
+        var size = 16, cols = 0, drops = [], dpr = 1, last = 0;
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          cols = Math.ceil(window.innerWidth / size);
+          drops = [];
+          for (var i = 0; i < cols; i++) drops.push(Math.random() * -50);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+        function draw(now) {
+          requestAnimationFrame(draw);
+          if (document.hidden || now - last < 50) return;
+          last = now;
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.fillStyle = "rgba(0, 0, 0, 0.12)";
+          ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+          ctx.globalCompositeOperation = "source-over";
+          ctx.font = size + "px 'JetBrains Mono', monospace";
+          var cs = getComputedStyle(root);
+          var c1 = cs.getPropertyValue("--accent").trim() || "#22e6ff";
+          var c2 = cs.getPropertyValue("--accent-2").trim() || "#ff3df2";
+          for (var i = 0; i < cols; i++) {
+            var y = drops[i] * size;
+            if (y > 0) {
+              ctx.fillStyle = Math.random() < 0.08 ? c2 : c1;
+              ctx.fillText(chars[(Math.random() * chars.length) | 0], i * size, y);
+            }
+            if (y > window.innerHeight && Math.random() > 0.975) drops[i] = 0;
+            drops[i] += 1;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      // 开机动画
+      if (root.classList.contains("booting")) {
+        var boot = document.getElementById("boot");
+        var log = document.getElementById("bootLog");
+        var bar = document.getElementById("bootBar");
+        var lines = [
+          "&gt; BOOT SEQUENCE v2.6.0",
+          "&gt; LOADING KERNEL MODULES ......... <span class=\"ok\">[ OK ]</span>",
+          "&gt; DECRYPTING PROFILE ............. <span class=\"ok\">[ OK ]</span>",
+          "&gt; USER: <span class=\"hot\">" + t("name").toUpperCase() + "</span>",
+          "&gt; LOC: 38.0428°N 114.5149°E",
+          "&gt; ACCESS GRANTED_"
+        ];
+        var step = 0, finished = false;
+        function finish() {
+          if (finished) return;
+          finished = true;
+          try { sessionStorage.setItem("booted", "1"); } catch (e) {}
+          boot.classList.add("done");
+          root.classList.remove("booting");
+          typeTagline();
+          setTimeout(function () { boot.remove(); }, 600);
+        }
+        var bootTimer = setInterval(function () {
+          if (step < lines.length) {
+            log.innerHTML += (step ? "\n" : "") + lines[step];
+            step += 1;
+            bar.style.width = (step / lines.length * 100) + "%";
+          } else {
+            clearInterval(bootTimer);
+            setTimeout(finish, 350);
+          }
+        }, 260);
+        boot.addEventListener("click", finish);
+        window.addEventListener("keydown", finish, { once: true });
+      }
+    })();
+  </script>
+</body>
+</html>
