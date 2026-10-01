@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 规则
 
 - 本文件（CLAUDE.md）必须使用中文编写；后续更新时也保持中文。
+- 与用户交流时，回复一律使用中文。
 
 ## 概述
 
