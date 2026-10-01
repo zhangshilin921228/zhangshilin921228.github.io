@@ -1,0 +1,3 @@
+# GitHub Pages (Jekyll) 构建配置：以下文件不发布到网站
+exclude:
+  - CLAUDE.md
